@@ -88,9 +88,27 @@ const QuantityButton = styled.button`
     }
 `;
 
-const Quantity = styled.span`
-  cursor: default;
+const QuantityInput = styled.input`
+  appearance: none; /* 기본 스피너 제거 */
+  -webkit-appearance: none; /* Safari에서 기본 스피너 제거 */
+  -moz-appearance: textfield; /* Firefox에서 기본 스피너 제거 */
+  padding: 0;
+  width: 20px;
+  text-align: center;
+  border: none;
+  outline: none;
+  background-color: transparent;
+  cursor: text;
+
+  /* 웹킷 브라우저에서 스피너 버튼 숨기기 */
+  &::-webkit-inner-spin-button,
+  &::-webkit-outer-spin-button {
+    -webkit-appearance: none;
+    margin: 0;
+  }
+}
 `;
+
 
 export default function Product({ shop, name, initialPrice, imgUrl, updateTotalPrice }) {
   const [quantity, setQuantity] = useState(1);
@@ -98,19 +116,26 @@ export default function Product({ shop, name, initialPrice, imgUrl, updateTotalP
 
   useEffect(() => {
     const newPrice = quantity * initialPrice; // 새로운 가격 계산
-    const priceDifference = newPrice - price; // 가격 차이 계산
+    const priceChange = newPrice - price; // 가격 변화 계산
     setPrice(newPrice); // 가격 업데이트
-    updateTotalPrice(priceDifference); // 총 가격 업데이트
+    updateTotalPrice(priceChange); // 가격 변화로 총 가격 업데이트
   }, [quantity]);
 
   const addQuantity = () => {
-    setQuantity(quantity + 1);
-  }
+    setQuantity(prev => prev + 1);
+  };
 
   const subQuantity = () => {
-    setQuantity(quantity - 1);
-  }
+    setQuantity(prev => (prev > 1 ? prev - 1 : prev));
+  };
 
+  const handleInputChange = (e) => {
+    const value = e.target.value;
+
+    if (!isNaN(value)) {
+      setQuantity(value);
+    } 
+  };
 
   return (
     <ProductContainer>
@@ -126,7 +151,7 @@ export default function Product({ shop, name, initialPrice, imgUrl, updateTotalP
               <path d="M288-144v-72h384v72H288Z"/>
             </svg>
           </QuantityButton>
-          <Quantity>{quantity}</Quantity>
+          <QuantityInput type="number" value={quantity} onChange={handleInputChange} />
           <QuantityButton onClick={addQuantity}>
             <svg xmlns="http://www.w3.org/2000/svg" height="20px" viewBox="0 -960 960 960" width="20px" fill="#282828">
               <path d="M444-444H240v-72h204v-204h72v204h204v72H516v204h-72v-204Z"/>
