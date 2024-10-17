@@ -1,4 +1,8 @@
-장바구니 페이지를 만들어보았다 아직 수정해야 할 부분이 많다...
+리액트로 장바구니 페이지를 만들어보았다
+<img width="500" alt="shopping-cart" src="https://github.com/user-attachments/assets/01840fd1-cc09-43cc-8bfd-533e9d9b61d1">
+
+
+아직 수정해야 할 부분이 많다...
 오늘 배운 점 
 1. styled-components을 사용해봄
 2. 공통 부모 요소에 state를 끌어올림
