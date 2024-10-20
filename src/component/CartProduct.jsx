@@ -8,8 +8,9 @@ export default function Product({ shop, name, initialPrice, imgUrl, updateTotalP
 
   useEffect(() => {
     const newPrice = quantity * initialPrice; // 새로운 가격 계산
+    const priceChange = newPrice - price; // 이전 가격과의 차이 계산
     setPrice(newPrice); // 가격 업데이트
-    updateTotalPrice(newPrice); // 총 가격 업데이트
+    updateTotalPrice(priceChange); // 이전 가격과의 차이를 통해 총 가격 업데이트
   }, [quantity]);
 
   const changeQuantity = (delta) => {
