@@ -1,6 +1,6 @@
 import React, { useState } from "react";
-import CartProductList from "./component/CartProductList";
-import CartTotalPrice from './component/CartTotalPrice';
+import ProductList from "./component/ProductList";
+import TotalPrice from './component/TotalPrice';
 import { productsData } from "./component/productsData";
 import { GlobalStyles } from './styles/GlobalStyles';
 
@@ -16,8 +16,8 @@ export default function App() {
       <React.StrictMode>
         <GlobalStyles />
         <h1>장바구니</h1>
-        <CartProductList productsData={productsData} updateTotalPrice={updateTotalPrice} />
-        <CartTotalPrice totalPrice={totalPrice} />
+        <ProductList productsData={productsData} updateTotalPrice={updateTotalPrice} />
+        <TotalPrice totalPrice={totalPrice} />
       </React.StrictMode>
   );
 }

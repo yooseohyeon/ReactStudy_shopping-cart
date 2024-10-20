@@ -66,7 +66,7 @@ export const QuantityButtonContainer = styled.div`
   border: 1px solid #ccc;
 `;
 
-export const QuantityButton = styled.button`
+export const QuantityButtonStyled = styled.button`
   padding: 0 5px 0 5px;
   width: 30px;
   height: 100%;

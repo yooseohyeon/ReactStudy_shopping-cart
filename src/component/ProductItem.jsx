@@ -1,5 +1,6 @@
 import { useState, useEffect, useRef } from 'react';
 import * as s from '../styles/ProductStyles';
+import QuantityButton from './QuantityButton';
 
 export default function Product({ shop, name, initialPrice, imgUrl, updateTotalPrice }) {
   const [quantity, setQuantity] = useState(1);
@@ -12,13 +13,6 @@ export default function Product({ shop, name, initialPrice, imgUrl, updateTotalP
     setPrice(newPrice); // 가격 업데이트
     updateTotalPrice(priceChange); // 이전 가격과의 차이를 통해 총 가격 업데이트
   }, [quantity]);
-
-  const changeQuantity = (delta) => {
-    const currentQuantity = parseInt(quantityRef.current.value, 10) || 1; // 입력 필드 값 숫자로 변환
-    const newQuantity = Math.max(currentQuantity + delta, 1);
-    quantityRef.current.value = newQuantity; 
-    setQuantity(newQuantity); 
-  };
   
   const handleInputBlur = (e) => {
     const value = e.target.value;
@@ -46,17 +40,9 @@ export default function Product({ shop, name, initialPrice, imgUrl, updateTotalP
         <s.ProductName>{name}</s.ProductName>
         <s.ProductPrice>{price.toLocaleString('ko-KR')}원</s.ProductPrice>
         <s.QuantityButtonContainer>
-          <s.QuantityButton onClick={() => changeQuantity(-1)} disabled={quantity <= 1}>
-            <svg xmlns="http://www.w3.org/2000/svg" height="20px" viewBox="0 -690 960 960" width="20px" fill="#282828">
-              <path d="M288-144v-72h384v72H288Z"/>
-            </svg>
-          </s.QuantityButton>
+          <QuantityButton delta={-1} setQuantity={setQuantity} currentQuantity={quantity} quantityRef={quantityRef} />
           <s.QuantityInput type="number" defaultValue={quantity} ref={quantityRef} onBlur={handleInputBlur} />
-          <s.QuantityButton onClick={() => changeQuantity(1)}>
-            <svg xmlns="http://www.w3.org/2000/svg" height="20px" viewBox="0 -960 960 960" width="20px" fill="#282828">
-              <path d="M444-444H240v-72h204v-204h72v204h204v72H516v204h-72v-204Z"/>
-            </svg>
-          </s.QuantityButton>
+          <QuantityButton delta={1} setQuantity={setQuantity} quantityRef={quantityRef} />
         </s.QuantityButtonContainer>
       </s.ProductInfo>
     </s.ProductContainer>

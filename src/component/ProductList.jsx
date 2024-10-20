@@ -1,7 +1,7 @@
 import React from "react";
-import CartProduct from "./CartProduct"
+import CartProduct from "./ProductItem"
 
-export default function CartProductList({ productsData, updateTotalPrice}) {
+export default function ProductList({ productsData, updateTotalPrice}) {
     return (
         <ul>
             {productsData.map(product => (
