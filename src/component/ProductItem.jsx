@@ -1,8 +1,9 @@
 import { useState, useEffect, useRef } from 'react';
 import * as s from '../styles/ProductStyles';
 import QuantityButton from './QuantityButton';
+import QuantityInput from './QuantityInput';
 
-export default function Product({ shop, name, initialPrice, imgUrl, updateTotalPrice }) {
+export default function ProductItem({ shop, name, initialPrice, imgUrl, updateTotalPrice }) {
   const [quantity, setQuantity] = useState(1);
   const [price, setPrice] = useState(initialPrice);
   const quantityRef = useRef(null);
@@ -14,23 +15,6 @@ export default function Product({ shop, name, initialPrice, imgUrl, updateTotalP
     updateTotalPrice(priceChange); // 이전 가격과의 차이를 통해 총 가격 업데이트
   }, [quantity]);
   
-  const handleInputBlur = (e) => {
-    const value = e.target.value;
-    const parsedValue = parseInt(value, 10);
-
-    if (value === "" || value === "0") {
-      alert("최소 수량은 1개입니다.");
-      setQuantity(1);
-      quantityRef.current.value = 1; // 입력 필드 업데이트
-      return;
-    }
-
-    if (!isNaN(parsedValue)) {
-      setQuantity(parsedValue); // 유효한 숫자일 경우 상태 업데이트
-    }
-  };
-    
-
   return (
     <s.ProductContainer>
       <s.ProductCheckbox type="checkbox" />
@@ -41,7 +25,7 @@ export default function Product({ shop, name, initialPrice, imgUrl, updateTotalP
         <s.ProductPrice>{price.toLocaleString('ko-KR')}원</s.ProductPrice>
         <s.QuantityButtonContainer>
           <QuantityButton delta={-1} setQuantity={setQuantity} currentQuantity={quantity} quantityRef={quantityRef} />
-          <s.QuantityInput type="number" defaultValue={quantity} ref={quantityRef} onBlur={handleInputBlur} />
+          <QuantityInput ref={quantityRef} quantity={quantity} setQuantity={setQuantity} />
           <QuantityButton delta={1} setQuantity={setQuantity} quantityRef={quantityRef} />
         </s.QuantityButtonContainer>
       </s.ProductInfo>
