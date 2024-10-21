@@ -58,52 +58,9 @@ export const ProductPrice = styled.p`
 
 export const QuantityButtonContainer = styled.div`
   display: flex;
-  justify-content: space-between;
   align-items: center;
   padding: 0;
-  width: 100px;
+  width: 115px;
   height: 35px;
   border: 1px solid #ccc;
-`;
-
-export const QuantityButton = styled.button`
-  padding: 0 5px 0 5px;
-  width: 30px;
-  height: 100%;
-  background-color: #ffffff00;
-  cursor: pointer;
-
-  &:first-of-type {
-    border-right: 1px solid #ccc;
-  }
-
-  &:last-of-type {
-    border-left: 1px solid #ccc;
-  }
-
-  &:disabled {
-    svg {
-      fill: #ccc;
-    }
-`;
-
-export const QuantityInput = styled.input`
-  appearance: none; /* 기본 스피너 제거 */
-  -webkit-appearance: none; /* Safari에서 기본 스피너 제거 */
-  -moz-appearance: textfield; /* Firefox에서 기본 스피너 제거 */
-  padding: 0;
-  width: 20px;
-  text-align: center;
-  border: none;
-  outline: none;
-  background-color: transparent;
-  cursor: text;
-
-  /* 웹킷 브라우저에서 스피너 버튼 숨기기 */
-  &::-webkit-inner-spin-button,
-  &::-webkit-outer-spin-button {
-    -webkit-appearance: none;
-    margin: 0;
-  }
-}
 `;

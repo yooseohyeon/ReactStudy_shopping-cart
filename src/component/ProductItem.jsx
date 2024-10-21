@@ -3,7 +3,7 @@ import * as s from '../styles/ProductStyles';
 import QuantityButton from './QuantityButton';
 import QuantityInput from './QuantityInput';
 
-export default function ProductItem({ shop, name, initialPrice, imgUrl, updateTotalPrice }) {
+export default function ProductItem({ shop, name, initialPrice, imgUrl, updateTotalPrice, productId }) {
   const [quantity, setQuantity] = useState(1);
   const quantityRef = useRef(null);
 
@@ -17,7 +17,7 @@ export default function ProductItem({ shop, name, initialPrice, imgUrl, updateTo
 
   return (
     <s.ProductContainer>
-      <s.ProductCheckbox type="checkbox" />
+      <s.ProductCheckbox type="checkbox" id={`quantity-chekbox-${productId}`} aria-label="상품 선택" />
       <s.ProductImg src={imgUrl} alt='' />
       <s.ProductInfo>
         <s.ProductShop>{shop}</s.ProductShop>
@@ -25,7 +25,7 @@ export default function ProductItem({ shop, name, initialPrice, imgUrl, updateTo
         <s.ProductPrice>{price.toLocaleString('ko-KR')}원</s.ProductPrice>
         <s.QuantityButtonContainer>
           <QuantityButton delta={-1} quantity={quantity} handleQuantityChange={handleQuantityChange} inputRef={quantityRef} />
-          <QuantityInput ref={quantityRef} quantity={quantity} handleQuantityChange={handleQuantityChange} />
+          <QuantityInput productId={productId} ref={quantityRef} quantity={quantity} handleQuantityChange={handleQuantityChange} />
           <QuantityButton delta={1} handleQuantityChange={handleQuantityChange} inputRef={quantityRef} />
         </s.QuantityButtonContainer>
       </s.ProductInfo>
