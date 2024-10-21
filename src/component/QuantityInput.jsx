@@ -44,6 +44,14 @@ const QuantityInput = forwardRef(({quantity, handleQuantityChange, productId}, r
     }
   };
 
+  // 보통 입력을 완료한 뒤 엔터 키를 누르므로, 엔터 키가 눌릴 경우 blur 핸들러를 호출하고 포커스 아웃함
+  const handleInputEnter = (e) => {
+    if (e.key === 'Enter') {
+      handleInputBlur(e); 
+      ref.current.blur(); // 포커스 아웃
+    }
+  };
+
   return (
     <StyledQuantityInput
       type="number"
@@ -51,8 +59,9 @@ const QuantityInput = forwardRef(({quantity, handleQuantityChange, productId}, r
       ref={ref}
       defaultValue={quantity}
       onBlur={handleInputBlur}
+      onKeyDown={handleInputEnter}
       aria-label="수량 입력 필드"
-      aria-live="polite" // 스크린리더가 수량 변경을 실시간으로 읽도록 설정
+      aria-live="polite" // 스크린리더에서 수량 변경을 실시간으로 읽도록 설정
     />
   );
 });
