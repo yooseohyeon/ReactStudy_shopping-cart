@@ -45,4 +45,8 @@ export const GlobalStyles = createGlobalStyle`
     padding: 30px;
     font-family: 'Pretendar-Regular';
   }
+
+  h1 {
+    margin-bottom: 20px;
+  }
 `;

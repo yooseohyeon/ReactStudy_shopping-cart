@@ -11,7 +11,7 @@ export const ProductContainer = styled.div`
 export const ProductCheckbox = styled.input`
   appearance: none;
   display: inline-block;
-  margin: 10px 15px 0 0;
+  margin: 0 15px 0 0;
   width: 20px;
   height: 20px;
   border-radius: 50%;
@@ -25,6 +25,22 @@ export const ProductCheckbox = styled.input`
     background-color: #3d3d3d;
     border-color: transparent;
   }
+`;
+
+export const SelectAllWrapper = styled.label`
+  display: flex;
+  align-items: center;
+  padding: 30px 10px;
+  margin-bottom: 25px;
+  width: 650px;
+  height: 30px;
+  font-size: 17px;
+  cursor: pointer;
+  border: 1px solid #aaa;
+`;
+
+export const SelectAllCheckbox = styled(ProductCheckbox)`
+  margin: 0 10px 0 0; 
 `;
 
 export const ProductImg = styled.img`
@@ -56,11 +72,67 @@ export const ProductPrice = styled.p`
   font-weight: 600;
 `;
 
-export const QuantityButtonContainer = styled.div`
+export const QuantityButtonWrapper = styled.div`
   display: flex;
   align-items: center;
   padding: 0;
   width: 115px;
   height: 35px;
   border: 1px solid #ccc;
+`;
+
+export const StyledQuantityButton = styled.button`
+  padding: 0 5px 0 5px;
+  width: 35px;
+  height: 100%;
+  background-color: #ffffff00;
+  cursor: pointer;
+
+  &:first-of-type {
+    border-right: 1px solid #ccc;
+  }
+
+  &:last-of-type {
+    border-left: 1px solid #ccc;
+  }
+
+  &:hover {
+    background-color: #ddd;
+  }
+  
+  &:disabled {
+    svg {
+      fill: #ccc;
+    }
+
+    &:hover {
+      background-color: #fff; /* disabled일 때 hover 시에도 #fff로 고정 */
+      cursor: not-allowed; /* 마우스 포인터를 변화 없음을 나타내는 것으로 변경 */
+    }
+`;
+
+export const StyledQuantityInput = styled.input`
+  appearance: none; /* 기본 스피너 제거 */
+  -webkit-appearance: none; /* Safari에서 기본 스피너 제거 */
+  -moz-appearance: textfield; /* Firefox에서 기본 스피너 제거 */
+  padding: 0;
+  width: 45px;
+  height: 100%;
+  text-align: center;
+  border: none;
+  outline: none;
+  background-color: transparent;
+  cursor: text;
+
+  /* 웹킷 브라우저에서 스피너 버튼 숨기기 */
+  &::-webkit-inner-spin-button,
+  &::-webkit-outer-spin-button {
+    -webkit-appearance: none;
+    margin: 0;
+  }
+
+  &:focus {
+    border: 2px solid #000000;
+  }
+}
 `;

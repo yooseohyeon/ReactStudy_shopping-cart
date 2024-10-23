@@ -3,7 +3,7 @@ import * as s from '../styles/ProductStyles';
 import QuantityButton from './QuantityButton';
 import QuantityInput from './QuantityInput';
 
-export default function ProductItem({ shop, name, initialPrice, imgUrl, updateTotalPrice, productId }) {
+export default function ProductItem({ shop, name, initialPrice, imgUrl, updateTotalPrice, productId, isChecked, onCheckboxChange }) {
   const [quantity, setQuantity] = useState(1);
   const quantityRef = useRef(null);
 
@@ -15,20 +15,30 @@ export default function ProductItem({ shop, name, initialPrice, imgUrl, updateTo
     updateTotalPrice(priceChange); // 총 가격에 반영
   };
 
+  const checkHandler = (e) => {
+    onCheckboxChange(productId, e.target.checked); // 개별 체크박스 상태 변경
+  };
+
   return (
-    <s.ProductContainer>
-      <s.ProductCheckbox type="checkbox" id={`quantity-chekbox-${productId}`} aria-label="상품 선택" />
-      <s.ProductImg src={imgUrl} alt='' />
-      <s.ProductInfo>
-        <s.ProductShop>{shop}</s.ProductShop>
-        <s.ProductName>{name}</s.ProductName>
-        <s.ProductPrice>{price.toLocaleString('ko-KR')}원</s.ProductPrice>
-        <s.QuantityButtonContainer>
-          <QuantityButton delta={-1} quantity={quantity} handleQuantityChange={handleQuantityChange} inputRef={quantityRef} />
-          <QuantityInput productId={productId} ref={quantityRef} quantity={quantity} handleQuantityChange={handleQuantityChange} />
-          <QuantityButton delta={1} handleQuantityChange={handleQuantityChange} inputRef={quantityRef} />
-        </s.QuantityButtonContainer>
-      </s.ProductInfo>
-    </s.ProductContainer>
+      <s.ProductContainer>
+        <s.ProductCheckbox 
+          type="checkbox"
+          id={`quantity-checkbox-${productId}`}
+          aria-label="상품 선택"
+          checked={isChecked} // 체크 상태 전달
+          onChange={checkHandler} // 체크박스 상태 변경 처리
+        />
+        <s.ProductImg src={imgUrl} alt='' />
+        <s.ProductInfo>
+          <s.ProductShop>{shop}</s.ProductShop>
+          <s.ProductName>{name}</s.ProductName>
+          <s.ProductPrice>{price.toLocaleString('ko-KR')}원</s.ProductPrice>
+          <s.QuantityButtonWrapper>
+            <QuantityButton delta={-1} quantity={quantity} handleQuantityChange={handleQuantityChange} inputRef={quantityRef} />
+            <QuantityInput productId={productId} ref={quantityRef} quantity={quantity} handleQuantityChange={handleQuantityChange} />
+            <QuantityButton delta={1} handleQuantityChange={handleQuantityChange} inputRef={quantityRef} />
+          </s.QuantityButtonWrapper>
+        </s.ProductInfo>
+      </s.ProductContainer>
   )
 }

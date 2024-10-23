@@ -1,36 +1,5 @@
 import React from "react";
-import styled from 'styled-components';
-
-const StyledQuantityButton = styled.button`
-  padding: 0 5px 0 5px;
-  width: 35px;
-  height: 100%;
-  background-color: #ffffff00;
-  cursor: pointer;
-
-  &:first-of-type {
-    border-right: 1px solid #ccc;
-  }
-
-  &:last-of-type {
-    border-left: 1px solid #ccc;
-  }
-
-  &:hover {
-    background-color: #ddd;
-  }
-  
-  &:disabled {
-    svg {
-      fill: #ccc;
-    }
-
-    &:hover {
-      background-color: #fff; /* disabled일 때 hover 시에도 #fff로 고정 */
-      cursor: not-allowed; /* 마우스 포인터를 변화 없음을 나타내는 것으로 변경 */
-    }
-`;
-
+import { StyledQuantityButton } from '../styles/ProductStyles';
 
 export default function QuantityButton({ delta, quantity, handleQuantityChange, inputRef }) {
   const handleClick = () => {
