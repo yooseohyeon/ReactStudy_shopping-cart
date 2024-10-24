@@ -1,7 +1,7 @@
 import React from "react";
 import { StyledQuantityButton } from '../styles/ProductStyles';
 
-export default function QuantityButton({ delta, quantity, handleQuantityChange, inputRef }) {
+export default function QuantityButton({ delta, quantity, handleQuantityChange, inputRef, productId }) {
   const handleClick = () => {
     const currentQuantity = parseInt(inputRef.current.value, 10) || 1; // 입력 필드 값 숫자로 변환
     const newQuantity = Math.max(currentQuantity + delta, 1);
@@ -14,7 +14,7 @@ export default function QuantityButton({ delta, quantity, handleQuantityChange, 
       onClick={handleClick} 
       disabled={quantity <= 1 && delta < 0}
       aria-label={delta < 0 ? `수량 ${quantity}에서 1 감소` : `수량 ${quantity}에서 1 증가`}
-      aria-controls="quantity-input" // 이 버튼이 id="quantity-input"인 StyledQuantityInput 요소를 제어함을 알려줌
+      aria-controls={`${parseInt(productId, 10) + 1}-quantity-input`} // 이 버튼이 id="quantity-input"인 StyledQuantityInput 요소를 제어함을 알려줌
     >
       {delta < 0 ? (
         <svg xmlns="http://www.w3.org/2000/svg" height="20px" viewBox="0 -750 960 960" width="20px" fill="#282828">

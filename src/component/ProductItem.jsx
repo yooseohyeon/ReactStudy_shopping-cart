@@ -23,7 +23,7 @@ export default function ProductItem({ shop, name, initialPrice, imgUrl, updateTo
       <s.ProductContainer>
         <s.ProductCheckbox 
           type="checkbox"
-          id={`quantity-checkbox-${productId}`}
+          id={`${parseInt(productId, 10) + 1}-product-checkbox`}
           aria-label="상품 선택"
           checked={isChecked} // 체크 상태 전달
           onChange={checkHandler} // 체크박스 상태 변경 처리
@@ -34,9 +34,9 @@ export default function ProductItem({ shop, name, initialPrice, imgUrl, updateTo
           <s.ProductName>{name}</s.ProductName>
           <s.ProductPrice>{price.toLocaleString('ko-KR')}원</s.ProductPrice>
           <s.QuantityButtonWrapper>
-            <QuantityButton delta={-1} quantity={quantity} handleQuantityChange={handleQuantityChange} inputRef={quantityRef} />
+            <QuantityButton delta={-1} quantity={quantity} handleQuantityChange={handleQuantityChange} inputRef={quantityRef} productId={productId} />
             <QuantityInput productId={productId} ref={quantityRef} quantity={quantity} handleQuantityChange={handleQuantityChange} />
-            <QuantityButton delta={1} handleQuantityChange={handleQuantityChange} inputRef={quantityRef} />
+            <QuantityButton delta={1} quantity={quantity} handleQuantityChange={handleQuantityChange} inputRef={quantityRef} productId={productId} />
           </s.QuantityButtonWrapper>
         </s.ProductInfo>
       </s.ProductContainer>

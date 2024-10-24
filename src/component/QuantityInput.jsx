@@ -29,7 +29,7 @@ const QuantityInput = forwardRef(({quantity, handleQuantityChange, productId}, r
   return (
     <StyledQuantityInput
       type="number"
-      id={`quantity-input-${productId}`} // 고유한 ID 사용
+      id={`${parseInt(productId, 10) + 1}-quantity-input`} // 고유한 ID 사용
       ref={ref}
       defaultValue={quantity}
       onBlur={handleInputBlur}
