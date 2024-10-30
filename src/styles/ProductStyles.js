@@ -1,10 +1,22 @@
 import styled from 'styled-components';
 import checkIcon from '../image/check.svg'
 
+export const ShoppingCartContainer = styled.div`
+  display: flex;
+  align-content: space-between;
+`
+
+export const ProductItemWrraper = styled.div`
+  display: block;
+  margin-right: 30px;
+`
+
 export const ProductContainer = styled.div`
   display: flex;
+  position: relative;
   padding: 20px 10px;
-  width: 650px;
+  width: 670px;
+  height: 100%;
   border-bottom: 1px solid #aaa;
 `;
 
@@ -12,9 +24,9 @@ export const ProductCheckbox = styled.input`
   appearance: none;
   display: inline-block;
   margin: 0 15px 0 0;
-  width: 20px;
-  height: 20px;
-  border-radius: 50%;
+  width: 22px;
+  height: 22px;
+  border-radius: 5px;
   border: 1.5px solid #bbb;
   cursor: pointer;
 
@@ -22,25 +34,44 @@ export const ProductCheckbox = styled.input`
     background-image: url(${checkIcon});
     background-repeat: no-repeat;
     background-position: center;
-    background-color: #3d3d3d;
+    background-color: #6c5ce7;
     border-color: transparent;
   }
 `;
 
-export const SelectAllWrapper = styled.label`
+export const SelectAllCheckboxWrapper = styled.div`
   display: flex;
+  justify-content: space-between;
   align-items: center;
   padding: 30px 10px;
-  margin-bottom: 25px;
-  width: 650px;
+  margin-bottom: 20px;
+  width: 670px;
   height: 30px;
-  font-size: 17px;
+  border-bottom: 1px solid #aaa;
   cursor: pointer;
-  border: 1px solid #aaa;
 `;
 
 export const SelectAllCheckbox = styled(ProductCheckbox)`
   margin: 0 10px 0 0; 
+`;
+
+export const SelectAllLabel = styled.label`
+  display: flex;
+  align-items: center;
+  font-size: 17px;
+  cursor: pointer;
+`
+
+export const DeleteProductButton = styled.button`
+  font-size: 16px;
+  padding: 5px 10px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  background-color: inherit;
+
+  &:hover {
+    background-color: #eee;
+  }
 `;
 
 export const ProductImg = styled.img`
@@ -57,7 +88,7 @@ export const ProductInfo = styled.div`
 
 export const ProductShop = styled.h5`
   margin-bottom: 10px;
-  font-size: 15px;
+  font-size: 16px;
 `;
 
 export const ProductName = styled.h4`
@@ -97,7 +128,7 @@ export const StyledQuantityButton = styled.button`
   }
 
   &:hover {
-    background-color: #ddd;
+    background-color: #eee;
   }
   
   &:disabled {
@@ -136,3 +167,50 @@ export const StyledQuantityInput = styled.input`
   }
 }
 `;
+
+export const TotalPriceWrapper = styled.div`
+  padding: 20px;
+  width: 350px;
+  height: 500px;
+`
+
+export const TotalPriceTitle = styled.p`
+  font-size: 23px;
+  font-weight: 600;
+  margin-bottom: 30px;
+`
+
+export const TotalPriceValue = styled.span`
+  font-weight: 550;
+`
+
+export const TotalPriceItem = styled.div`
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-size: 17px;
+  margin-bottom: 15px;
+
+  &:nth-child(2) {
+    padding-bottom: 20px;
+    margin-bottom: 20px;
+    border-bottom: 1px solid #ddd;
+  }
+
+  &:nth-child(3) ${TotalPriceValue} {
+    font-size: 28px;
+    font-weight: 600;
+  }
+`
+
+export const BuyButton = styled.button`
+    width: 100%;
+    padding: 18px;
+    margin-top: 10px;
+    font-size: 17px;
+    font-weight: 500;
+    border-radius: 5px;
+    color: #fff;
+    background-color: #6c5ce7;
+}
+`

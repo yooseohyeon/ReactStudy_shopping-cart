@@ -1,13 +1,15 @@
-import { useState, useEffect, useRef } from 'react';
+import { useState, useRef } from 'react';
 import * as s from '../styles/ProductStyles';
 import QuantityButton from './QuantityButton';
 import QuantityInput from './QuantityInput';
+import DeleteProductButton from './DeleteProductButton';
 
-export default function ProductItem({ shop, name, initialPrice, imgUrl, updateTotalPrice, productId, isChecked, onCheckboxChange }) {
+export default function ProductItem({ shop, name, initialPrice, imgUrl, updateTotalPrice, productId, isChecked, onCheckboxChange, onDeleteProduct }) {
   const [quantity, setQuantity] = useState(1);
   const quantityRef = useRef(null);
 
-  const price = quantity * initialPrice; // 컴포넌트 안의 다른 state, prop를 통해 계산할 수 있으므로 price를 state로 선언하지않음
+  const price = quantity * initialPrice; 
+  // 컴포넌트 안의 다른 state, prop를 통해 계산할 수 있으므로 price를 state로 선언하지 않음
   
   const handleQuantityChange = (newQuantity) => {
     const priceChange = (newQuantity - quantity) * initialPrice; // 가격 차이를 계산
@@ -16,7 +18,9 @@ export default function ProductItem({ shop, name, initialPrice, imgUrl, updateTo
   };
 
   const checkHandler = (e) => {
-    onCheckboxChange(productId, e.target.checked); // 개별 체크박스 상태 변경
+    onCheckboxChange(e.target.checked); // 개별 체크박스 상태 변경
+    const priceChange = e.target.checked ? price : -price; // 체크 시 가격 더하고, 체크 해제 시 가격 빼기
+    updateTotalPrice(priceChange); // 총 가격에 반영
   };
 
   return (
@@ -39,6 +43,7 @@ export default function ProductItem({ shop, name, initialPrice, imgUrl, updateTo
             <QuantityButton delta={1} quantity={quantity} handleQuantityChange={handleQuantityChange} inputRef={quantityRef} productId={productId} />
           </s.QuantityButtonWrapper>
         </s.ProductInfo>
+        <DeleteProductButton productId={productId} onDelete={onDeleteProduct} parentComponent="ProductItem" />
       </s.ProductContainer>
   )
 }

@@ -42,11 +42,15 @@ export const GlobalStyles = createGlobalStyle`
   }
 
   body {
-    padding: 30px;
+    display: flex;
+    align-items: center;
+    padding: 30px 30px 0 30px;
     font-family: 'Pretendar-Regular';
   }
 
   h1 {
+    display: flex;
+    justify-content: center;
     margin-bottom: 20px;
   }
 `;

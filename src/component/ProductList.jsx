@@ -1,8 +1,7 @@
 import React from "react";
-import CartProduct from "./ProductItem";
 import ProductItem from "./ProductItem";
 
-export default function ProductList({ productsData, updateTotalPrice, isCheckedList, onCheckboxChange }) {
+export default function ProductList({ productsData, updateTotalPrice, isCheckedList, onCheckboxChange, onDeleteProduct }) {
   return (
     <ul>
         <li>
@@ -15,8 +14,9 @@ export default function ProductList({ productsData, updateTotalPrice, isCheckedL
                     initialPrice={product.price}
                     imgUrl={product.imgUrl}
                     updateTotalPrice={updateTotalPrice}
-                    isChecked={isCheckedList[index]} // 개별 체크 상태 전달
-                    onCheckboxChange={onCheckboxChange} // 체크박스 상태 변경 처리
+                    isChecked={isCheckedList[index].checked} // 개별 체크 상태 전달
+                    onCheckboxChange={(isChecked) => onCheckboxChange(index, isChecked)} 
+                    onDeleteProduct={onDeleteProduct} // 삭제 함수 전달
                 />
             ))}
         </li>

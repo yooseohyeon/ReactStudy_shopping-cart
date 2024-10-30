@@ -1,9 +1,25 @@
 import React from 'react';
+import * as s from '../styles/ProductStyles';
 
-export default function TotalPrice({ totalPrice }) {
+export default function TotalPrice({ totalPrice, checkedCount }) {
   return (
-    <div>
-      <h2>결제 예정 금액: {totalPrice.toLocaleString('ko-KR')}원</h2>
-    </div>
+    <s.TotalPriceWrapper>
+      <s.TotalPriceTitle> 결제 정보 </s.TotalPriceTitle>
+      <ul>
+        <s.TotalPriceItem>
+          <span>상품 금액</span>
+          <s.TotalPriceValue>{totalPrice.toLocaleString('ko-KR')}원</s.TotalPriceValue>
+        </s.TotalPriceItem>
+        <s.TotalPriceItem>
+          <span>배송비</span>
+          <s.TotalPriceValue>0원</s.TotalPriceValue>
+        </s.TotalPriceItem>
+        <s.TotalPriceItem>
+          <span>총 결제 금액</span>
+          <s.TotalPriceValue>{totalPrice.toLocaleString('ko-KR')}원</s.TotalPriceValue>
+        </s.TotalPriceItem>
+      </ul>
+      <s.BuyButton> {checkedCount}개 상품 구매하기</s.BuyButton>
+    </s.TotalPriceWrapper>
   );
 }
