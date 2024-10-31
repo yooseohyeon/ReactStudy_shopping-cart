@@ -3,24 +3,22 @@ import * as s from '../styles/ProductStyles';
 import QuantityButton from './QuantityButton';
 import QuantityInput from './QuantityInput';
 
-export default function ProductItem({ 
-  shop, name, initialPrice, imgUrl, updateTotalPrice, 
-  productId, isChecked, onCheckboxChange, onDeleteProduct, quantity, onQuantityChange 
-}) {
+export default function ProductItem({ shop, name, initialPrice, imgUrl, updateTotalPrice, productId, isChecked, onCheckboxChange, onDeleteProduct, quantity, onQuantityChange }) {
   const quantityRef = useRef(null);
 
   const price = quantity * initialPrice; 
 
   const handleQuantityChange = (newQuantity) => {
-    onQuantityChange(productId, newQuantity); // 부모에게 수량 변경 요청
+    onQuantityChange(productId, newQuantity);
   };
 
   const requestDelete = () => {
-    // 체크박스가 체크되어 있는 경우에만 가격을 제외
-    if (isChecked) {
-      updateTotalPrice(-price); // 삭제할 상품의 가격을 총 가격에서 제외
-    }
-    onDeleteProduct(productId); // 부모의 삭제 함수 호출
+        // 체크박스가 체크되어 있는 경우에만 가격을 제외
+        if (isChecked) {
+          updateTotalPrice(-price); // 삭제할 상품의 가격을 총 가격에서 제외
+        }
+        onDeleteProduct(productId); // 부모의 삭제 함수 호출
+    
   };
 
   const handleCheck = (e) => {
