@@ -13,12 +13,10 @@ export default function ProductItem({ shop, name, initialPrice, imgUrl, updateTo
   };
 
   const requestDelete = () => {
-        // 체크박스가 체크되어 있는 경우에만 가격을 제외
-        if (isChecked) {
-          updateTotalPrice(-price); // 삭제할 상품의 가격을 총 가격에서 제외
-        }
-        onDeleteProduct(productId); // 부모의 삭제 함수 호출
-    
+    if (isChecked) {
+      updateTotalPrice(-price);
+    }
+    onDeleteProduct(productId); 
   };
 
   const handleCheck = (e) => {

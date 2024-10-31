@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import SelectAllCheckbox from "./component/SelectAllCheckbox";
 import ProductList from "./component/ProductList";
+import EmptyCartNotice from "./component/EmptyCartNotice"
 import TotalPrice from './component/TotalPrice';
 import { productsData } from "./component/productsData";
 import { GlobalStyles } from './styles/GlobalStyles';
@@ -85,7 +86,7 @@ export default function App() {
       setTotalPrice(newTotalPrice); 
     }
   };
-  
+
   return (
     <React.StrictMode>
       <GlobalStyles />
@@ -98,13 +99,17 @@ export default function App() {
               toggleSelectAll={toggleSelectAll}
               onDeleteSelectedProducts={handleDeleteSelectedProducts} 
             />
-            <ProductList
-              isCheckedList={isCheckedList}
-              setIsCheckedList={setIsCheckedList}
-              updateTotalPrice={updateTotalPrice}
-              onCheckboxChange={handleCheckboxChange}
-              onQuantityChange={handleQuantityChange} 
-            />
+            {isCheckedList.length > 0 ? (
+              <ProductList
+                isCheckedList={isCheckedList}
+                setIsCheckedList={setIsCheckedList}
+                updateTotalPrice={updateTotalPrice}
+                onCheckboxChange={handleCheckboxChange}
+                onQuantityChange={handleQuantityChange} 
+              />
+            ) : (
+              <EmptyCartNotice />
+            )}
           </s.ProductItemWrraper>
         <TotalPrice isCheckedList={isCheckedList} totalPrice={totalPrice} />
       </s.ShoppingCartContainer>
