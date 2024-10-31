@@ -1,10 +1,11 @@
 import React from 'react';
 import * as s from '../styles/ProductStyles';
-import DeleteProductButton from "./DeleteProductButton";
 
-export default function SelectAllCheckbox({ isChecked, setIsChecked, isCheckedList, checkedCount, productsData }) {
-  const checkHandler = (e) => {
-    setIsChecked(e.target.checked);
+export default function SelectAllCheckbox({ isCheckedList, isChecked, toggleSelectAll, onDeleteSelectedProducts }) {
+  const checkedCount = isCheckedList.filter(product => product.checked).length;
+
+  const handleCheck = (e) => {
+    toggleSelectAll(e.target.checked);
   };
 
   return (
@@ -14,11 +15,13 @@ export default function SelectAllCheckbox({ isChecked, setIsChecked, isCheckedLi
           type="checkbox"
           id="selectAllcheckbox"
           checked={isChecked}
-          onChange={checkHandler}
+          onChange={handleCheck}
         />
         전체 선택 ({checkedCount}/{isCheckedList.length}) 
       </s.SelectAllLabel>
-      <DeleteProductButton checkedCount={checkedCount} productId={productsData.id} parentComponent="SelectAllCheckbox" />
+      <s.DeleteProductButton onClick={onDeleteSelectedProducts}>
+        선택 삭제
+      </s.DeleteProductButton>
     </s.SelectAllCheckboxWrapper>
   );
 }
