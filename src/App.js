@@ -95,7 +95,7 @@ export default function App() {
           <s.ProductItemWrraper>
             <SelectAllCheckbox
               isCheckedList={isCheckedList}
-              isChecked={isCheckedList.every(product => product.checked)}
+              isChecked={isCheckedList.length > 0 && isCheckedList.every(product => product.checked)}
               toggleSelectAll={toggleSelectAll}
               onDeleteSelectedProducts={handleDeleteSelectedProducts} 
             />

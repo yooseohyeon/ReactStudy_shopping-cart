@@ -29,12 +29,10 @@ export const ProductCheckbox = styled.input`
   border-radius: 5px;
   border: 1.5px solid #bbb;
   cursor: pointer;
+  transition: background 250ms ease-in, border 250ms ease-in; 
 
   &:checked {
-    background-image: url(${checkIcon});
-    background-repeat: no-repeat;
-    background-position: center;
-    background-color: #6c5ce7;
+    background: #6c5ce7 url(${checkIcon}) center / cover no-repeat;
     border-color: transparent;
   }
 `;
@@ -52,7 +50,7 @@ export const SelectAllCheckboxWrapper = styled.div`
 `;
 
 export const SelectAllCheckbox = styled(ProductCheckbox)`
-  margin: 0 10px 0 0; 
+  margin: 0 10px 0 0;   
 `;
 
 export const SelectAllLabel = styled.label`
@@ -60,6 +58,7 @@ export const SelectAllLabel = styled.label`
   align-items: center;
   font-size: 17px;
   cursor: pointer;
+  color: ${({ disabled }) => (disabled ? '#bbb' : 'inherit')};
 `
 
 export const DeleteProductButton = styled.button`
@@ -68,9 +67,10 @@ export const DeleteProductButton = styled.button`
   border: 1px solid #ccc;
   border-radius: 5px;
   background-color: inherit;
+  color: ${({ disabled }) => (disabled ? '#bbb' : 'inherit')};
 
   &:hover {
-    background-color: #eee;
+    background-color: ${({ disabled }) => (disabled ? 'inherit' : '#eee')}; // disabled 상태일 때는 기본 배경색 유지
   }
 `;
 
@@ -117,7 +117,6 @@ export const StyledQuantityButton = styled.button`
   width: 35px;
   height: 100%;
   background-color: #ffffff00;
-  cursor: pointer;
 
   &:first-of-type {
     border-right: 1px solid #ccc;
@@ -128,18 +127,15 @@ export const StyledQuantityButton = styled.button`
   }
 
   &:hover {
-    background-color: #eee;
+    background-color: ${({ disabled }) => (disabled ? 'inherit' : '#eee')}; 
+    cursor: ${({ disabled }) => (disabled ? 'not-allowed' : 'pointer')};
   }
-  
+
   &:disabled {
     svg {
       fill: #ccc;
     }
-
-    &:hover {
-      background-color: #fff; /* disabled일 때 hover 시에도 #fff로 고정 */
-      cursor: not-allowed; /* 마우스 포인터를 변화 없음을 나타내는 것으로 변경 */
-    }
+}
 `;
 
 export const StyledQuantityInput = styled.input`
@@ -204,13 +200,18 @@ export const TotalPriceItem = styled.div`
 `
 
 export const BuyButton = styled.button`
-    width: 100%;
-    padding: 18px;
-    margin-top: 10px;
-    font-size: 17px;
-    font-weight: 500;
-    border-radius: 5px;
-    color: #fff;
-    background-color: #6c5ce7;
+  width: 100%;
+  padding: 18px;
+  margin-top: 10px;
+  font-size: 17px;
+  font-weight: 500;
+  border-radius: 5px;
+  color: #fff;
+  background-color: #6c5ce7;
+  transition: background-color 100ms ease-out;
+
+  &:hover {
+    background-color: #5849cf;
+  }
 }
 `

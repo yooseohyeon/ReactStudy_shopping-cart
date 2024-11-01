@@ -8,9 +8,9 @@ const EmptyCartNoticeContainer = styled.div`
   height: 500px;
 `
 
-const EmptyCartNoticeTitle = styled.h2`
+const EmptyCartNoticeTitle = styled.p`
   margin-top: 15px;
-  font-size: 21px;
+  font-size: 20px;
 `;
 
 export default function EmptyCartNotice() {
