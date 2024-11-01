@@ -1,0 +1,16 @@
+{
+  "files": {
+    "main.css": "/yooseohyeon/ReactStudy_shopping-cart/static/css/main.e6c13ad2.css",
+    "main.js": "/yooseohyeon/ReactStudy_shopping-cart/static/js/main.1b4b2d32.js",
+    "static/js/453.59eb9ae1.chunk.js": "/yooseohyeon/ReactStudy_shopping-cart/static/js/453.59eb9ae1.chunk.js",
+    "index.html": "/yooseohyeon/ReactStudy_shopping-cart/index.html",
+    "static/media/check.svg": "/yooseohyeon/ReactStudy_shopping-cart/static/media/check.6d2c7c89ddff0b1948a5ac4f0fe94989.svg",
+    "main.e6c13ad2.css.map": "/yooseohyeon/ReactStudy_shopping-cart/static/css/main.e6c13ad2.css.map",
+    "main.1b4b2d32.js.map": "/yooseohyeon/ReactStudy_shopping-cart/static/js/main.1b4b2d32.js.map",
+    "453.59eb9ae1.chunk.js.map": "/yooseohyeon/ReactStudy_shopping-cart/static/js/453.59eb9ae1.chunk.js.map"
+  },
+  "entrypoints": [
+    "static/css/main.e6c13ad2.css",
+    "static/js/main.1b4b2d32.js"
+  ]
+}
