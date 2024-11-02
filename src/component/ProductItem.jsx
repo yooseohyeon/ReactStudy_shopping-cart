@@ -2,8 +2,9 @@ import { useRef } from 'react';
 import * as s from '../styles/ProductStyles';
 import QuantityButton from './QuantityButton';
 import QuantityInput from './QuantityInput';
+import { calculateTotalPrice } from '../utils/calculateTotalPrice';
 
-export default function ProductItem({ shop, name, initialPrice, imgUrl, updateTotalPrice, productId, isChecked, onCheckboxChange, onDeleteProduct, quantity, onQuantityChange }) {
+export default function ProductItem({ products, setProducts, shop, name, initialPrice, imgUrl, productId, isChecked, quantity, setTotalPrice, onCheckboxChange, onQuantityChange }) {
   const quantityRef = useRef(null);
 
   const price = quantity * initialPrice; 
@@ -12,18 +13,16 @@ export default function ProductItem({ shop, name, initialPrice, imgUrl, updateTo
     onQuantityChange(productId, newQuantity);
   };
 
-  const requestDelete = () => {
-    if (isChecked) {
-      updateTotalPrice(-price);
-    }
-    onDeleteProduct(productId); 
-  };
-
   const handleCheck = (e) => {
     onCheckboxChange(e.target.checked); // 개별 체크박스 상태 변경
-    const priceChange = e.target.checked ? price : -price; 
-    updateTotalPrice(priceChange); // 총 가격에 반영
   };
+
+  // 하나의 상품만 삭제
+  const handleDeleteSingleProduct = (productId) => {
+    const updatedProducts = products.filter(product => product.id !== productId);
+    setProducts(updatedProducts);
+    setTotalPrice(calculateTotalPrice(updatedProducts)); // 남은 상품의 가격이 총 가격에 업데이트됨
+  }
 
   return (
     <s.ProductContainer>
@@ -52,7 +51,7 @@ export default function ProductItem({ shop, name, initialPrice, imgUrl, updateTo
         viewBox="0 -960 960 960" 
         width="24px" 
         fill="#aaa" 
-        onClick={requestDelete}
+        onClick={() => handleDeleteSingleProduct(productId)}
       >
         <path d="m256-200-56-56 224-224-224-224 56-56 224 224 224-224 56 56-224 224 224 224-56 56-224-224-224 224Z"/>
       </svg>

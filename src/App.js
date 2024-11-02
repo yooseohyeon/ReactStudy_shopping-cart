@@ -5,86 +5,51 @@ import EmptyCartNotice from "./component/EmptyCartNotice"
 import TotalPrice from './component/TotalPrice';
 import { productsData } from "./component/productsData";
 import { GlobalStyles } from './styles/GlobalStyles';
+import { calculateTotalPrice } from './utils/calculateTotalPrice';
 import * as s from './styles/ProductStyles';
 
 export default function App() {
-  const [isCheckedList, setIsCheckedList] = useState(
+  // 여러 상품의 정보를 담는 배열이므로 이름을 isCheckedList에서 products로 직관적으로 변경함
+  const [products, setProducts] = useState(
     productsData.map(product => ({
       ...product,
-      checked: true, // 기본값을 true로 설정 - 화면에 접속 시 전부 선택
-      quantity: 1,   // quantity를 다양한 컴포넌트에서 사용하기 때문에 공통 부모 컴포넌트로 끌어올림
+      checked: true, 
+      // 모든 상품의 checked를 true로 설정해 처음 접속했을 때 모든 상품들이 자동으로 선택되어 있도록 했음
+      quantity: 1,  
     }))
   );
-  
-  const [totalPrice, setTotalPrice] = useState(
-    isCheckedList.reduce((acc, product) => acc + product.price, 0)
-  );
 
-  const updateTotalPrice = (priceChange) => {
-    setTotalPrice(prevTotal => prevTotal + priceChange);
-  };
-  
+  // 가격을 업데이트하는 로직이 여러 곳에서 반복되기 때문에, 이를 calculateTotalPrice 함수로 추출하여 코드를 간결하게 함
+  const [totalPrice, setTotalPrice] = useState(calculateTotalPrice(products));
+
   // 전체 선택/해제 핸들러
   const toggleSelectAll = (isChecked) => {
-    const allCheckedList = isCheckedList.map(product => ({
-      ...product,
-      checked: isChecked,
-    }));
+    // 개별 체크박스의 checked를 전체 선택 체크박스의 isChecked로 변환
+    const updatedList = products.map(product => ({ ...product, checked: isChecked }));
+    setProducts(updatedList);
+    setTotalPrice(calculateTotalPrice(updatedList));
+  }
 
-    setIsCheckedList(allCheckedList);
-    
-    if (isChecked) {
-      const total = allCheckedList.reduce((acc, product) => acc + product.price * product.quantity, 0);
-      setTotalPrice(total);
-    } else {
-      setTotalPrice(0);
-    }
-  };
-  
   // 개별 체크박스 상태 변경 핸들러
   const handleCheckboxChange = (productId, isChecked) => {
-    const updatedCheckedList = isCheckedList.map(product => {
-      return product.id === productId 
-        ? { ...product, checked: isChecked } 
-        : product;
-    });
-  
-    setIsCheckedList(updatedCheckedList);
+    const updatedCheckedList = products.map(product =>
+      product.id === productId ? { ...product, checked: isChecked } : product
+    );
+    setProducts(updatedCheckedList);
+    setTotalPrice(calculateTotalPrice(updatedCheckedList)); 
   };
   
   // 수량 변경 핸들러
   const handleQuantityChange = (productId, newQuantity) => {
-    const updatedCheckedList = isCheckedList.map(product => {
+    const updatedCheckedList = products.map(product => {
       if (product.id === productId) {
-        const priceChange = (newQuantity - product.quantity) * product.price; // 가격 변경 계산
-        updateTotalPrice(priceChange); // 총 가격 업데이트
-        return { ...product, quantity: newQuantity }; // 수량 업데이트
+        const priceChange = (newQuantity - product.quantity) * product.price; // 가격 변화 계산
+        setTotalPrice(prevTotal => prevTotal + priceChange); // 가격 변화를 totalPrice에 업데이트
+        return { ...product, quantity: newQuantity }; // quantity 업데이트
       }
       return product;
     });
-    setIsCheckedList(updatedCheckedList);
-  };
-
-  // 선택한 상품만 삭제
-  const handleDeleteSelectedProducts = () => {
-    const checkedProducts = isCheckedList.filter(product => product.checked);
-    const confirmed = window.confirm(`선택한 ${checkedProducts.length}개의 상품을 장바구니에서 삭제하시겠습니까?`);
-  
-    if (confirmed) {
-      const priceToRemove = checkedProducts.reduce((acc, product) => acc + (product.price * product.quantity), 0);
-      const updatedProducts = isCheckedList.filter(product => !product.checked);
-      
-      setIsCheckedList(updatedProducts); // 체크된 상품 삭제
-      setTotalPrice(prevTotal => prevTotal - priceToRemove); // 총 가격에서 삭제된 상품 가격 빼기
-      
-      // 삭제하지 않은 상품 체크
-      const newCheckedList = updatedProducts.map(product => ({ ...product, checked: true })); 
-      setIsCheckedList(newCheckedList);
-  
-      // 남은 상품의 총 가격을 재계산
-      const newTotalPrice = newCheckedList.reduce((acc, product) => acc + (product.checked ? product.price * product.quantity : 0), 0);
-      setTotalPrice(newTotalPrice); 
-    }
+    setProducts(updatedCheckedList);
   };
 
   return (
@@ -94,16 +59,17 @@ export default function App() {
       <s.ShoppingCartContainer>
           <s.ProductItemWrraper>
             <SelectAllCheckbox
-              isCheckedList={isCheckedList}
-              isChecked={isCheckedList.length > 0 && isCheckedList.every(product => product.checked)}
+              isChecked={products.length > 0 && products.every(product => product.checked)}
+              products={products}
+              setProducts={setProducts}
+              setTotalPrice={setTotalPrice}
               toggleSelectAll={toggleSelectAll}
-              onDeleteSelectedProducts={handleDeleteSelectedProducts} 
             />
-            {isCheckedList.length > 0 ? (
+            {products.length > 0 ? (
               <ProductList
-                isCheckedList={isCheckedList}
-                setIsCheckedList={setIsCheckedList}
-                updateTotalPrice={updateTotalPrice}
+                products={products}
+                setProducts={setProducts}
+                setTotalPrice={setTotalPrice}
                 onCheckboxChange={handleCheckboxChange}
                 onQuantityChange={handleQuantityChange} 
               />
@@ -111,7 +77,7 @@ export default function App() {
               <EmptyCartNotice />
             )}
           </s.ProductItemWrraper>
-        <TotalPrice isCheckedList={isCheckedList} totalPrice={totalPrice} />
+        <TotalPrice products={products} totalPrice={totalPrice} />
       </s.ShoppingCartContainer>
     </React.StrictMode>
   );

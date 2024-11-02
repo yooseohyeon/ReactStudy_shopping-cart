@@ -1,8 +1,8 @@
 import React from 'react';
 import * as s from '../styles/ProductStyles';
 
-export default function TotalPrice({ totalPrice, isCheckedList }) {
-  const checkedCount = isCheckedList.filter(product => product.checked).length;
+export default function TotalPrice({ products, totalPrice }) {
+  const checkedCount = products.filter(product => product.checked).length;
 
   return (
     <s.TotalPriceWrapper>
