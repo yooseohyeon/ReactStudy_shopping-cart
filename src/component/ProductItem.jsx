@@ -1,8 +1,8 @@
 import { useRef } from 'react';
-import * as s from '../styles/ProductStyles';
 import QuantityButton from './QuantityButton';
 import QuantityInput from './QuantityInput';
-import { calculateTotalPrice } from '../utils/calculateTotalPrice';
+import DeleteButton from './DeleteButton'
+import * as s from '../styles/ProductStyles';
 
 export default function ProductItem({ products, setProducts, shop, name, initialPrice, imgUrl, productId, isChecked, quantity, setTotalPrice, onCheckboxChange, onQuantityChange }) {
   const quantityRef = useRef(null);
@@ -16,13 +16,6 @@ export default function ProductItem({ products, setProducts, shop, name, initial
   const handleCheck = (e) => {
     onCheckboxChange(e.target.checked); // 개별 체크박스 상태 변경
   };
-
-  // 하나의 상품만 삭제
-  const handleDeleteSingleProduct = (productId) => {
-    const updatedProducts = products.filter(product => product.id !== productId);
-    setProducts(updatedProducts);
-    setTotalPrice(calculateTotalPrice(updatedProducts)); // 남은 상품의 가격이 총 가격에 업데이트됨
-  }
 
   return (
     <s.ProductContainer>
@@ -44,17 +37,7 @@ export default function ProductItem({ products, setProducts, shop, name, initial
           <QuantityButton delta={1} quantity={quantity} handleQuantityChange={handleQuantityChange} inputRef={quantityRef} productId={productId} />
         </s.QuantityButtonWrapper>
       </s.ProductInfo>
-      <svg 
-        style={{ position: 'absolute', right: 10, cursor: 'pointer' }} 
-        xmlns="http://www.w3.org/2000/svg" 
-        height="24px" 
-        viewBox="0 -960 960 960" 
-        width="24px" 
-        fill="#aaa" 
-        onClick={() => handleDeleteSingleProduct(productId)}
-      >
-        <path d="m256-200-56-56 224-224-224-224 56-56 224 224 224-224 56 56-224 224 224 224-56 56-224-224-224 224Z"/>
-      </svg>
+      <DeleteButton products={products} setProducts={setProducts} setTotalPrice={setTotalPrice} productId={productId} type="single" />
     </s.ProductContainer>
   )
 }

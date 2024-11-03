@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import SelectAllCheckbox from "./component/SelectAllCheckbox";
+import SelectControls from "./component/SelectControls";
 import ProductList from "./component/ProductList";
 import EmptyCartNotice from "./component/EmptyCartNotice"
 import TotalPrice from './component/TotalPrice';
@@ -14,7 +14,7 @@ export default function App() {
     productsData.map(product => ({
       ...product,
       checked: true, 
-      // 모든 상품의 checked를 true로 설정해 처음 접속했을 때 모든 상품들이 자동으로 선택되어 있도록 했음
+      // 모든 상품의 checked를 true로 설정해 처음 접속했을 때 모든 상품들이 자동으로 선택되어 있도록 함
       quantity: 1,  
     }))
   );
@@ -58,7 +58,7 @@ export default function App() {
       <h1>장바구니</h1>
       <s.ShoppingCartContainer>
           <s.ProductItemWrraper>
-            <SelectAllCheckbox
+            <SelectControls
               isChecked={products.length > 0 && products.every(product => product.checked)}
               products={products}
               setProducts={setProducts}

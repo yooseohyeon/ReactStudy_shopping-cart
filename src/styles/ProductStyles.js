@@ -37,7 +37,7 @@ export const ProductCheckbox = styled.input`
   }
 `;
 
-export const SelectAllCheckboxWrapper = styled.div`
+export const SelectAllControlsWrapper = styled.div`
   display: flex;
   justify-content: space-between;
   align-items: center;
@@ -60,19 +60,6 @@ export const SelectAllLabel = styled.label`
   cursor: pointer;
   color: ${({ disabled }) => (disabled ? '#bbb' : 'inherit')};
 `
-
-export const DeleteProductButton = styled.button`
-  font-size: 16px;
-  padding: 5px 10px;
-  border: 1px solid #ccc;
-  border-radius: 5px;
-  background-color: inherit;
-  color: ${({ disabled }) => (disabled ? '#bbb' : 'inherit')};
-
-  &:hover {
-    background-color: ${({ disabled }) => (disabled ? 'inherit' : '#eee')}; // disabled 상태일 때는 기본 배경색 유지
-  }
-`;
 
 export const ProductImg = styled.img`
   margin-right: 25px;
