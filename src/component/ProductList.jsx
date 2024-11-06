@@ -1,28 +1,15 @@
-import React from "react";
+import React, { useContext } from "react";
+import { CartContext } from "../contexts/CartContext";
 import ProductItem from "./ProductItem";
 
-export default function ProductList({ products, setProducts, setTotalPrice, onCheckboxChange, onQuantityChange }) {
+export default function ProductList() {
+  const { products } = useContext(CartContext);
+
   return (
     <ul>
-      <li>
-        {products.map((product) => (
-          <ProductItem
-            products={products}
-            setProducts={setProducts}
-            key={product.id}
-            productId={product.id}
-            shop={product.shop}
-            name={product.name}
-            initialPrice={product.price}
-            imgUrl={product.imgUrl}
-            quantity={product.quantity} 
-            isChecked={product.checked} 
-            setTotalPrice={setTotalPrice}
-            onCheckboxChange={(isChecked) => onCheckboxChange(product.id, isChecked)}
-            onQuantityChange={onQuantityChange} 
-          />
-        ))}
-      </li>
+      {products.map((product) => (
+        <ProductItem key={product.id} product={product} /> // product 객체를 props로 전달
+      ))}
     </ul>
   );
 }

@@ -1,20 +1,23 @@
-import { forwardRef } from 'react';
+import React, { useContext, forwardRef } from 'react';
+import { CartContext } from '../contexts/CartContext'
 import { StyledQuantityInput } from '../styles/ProductStyles';
 
-const QuantityInput = forwardRef(({quantity, handleQuantityChange, productId}, ref) => {
+const QuantityInput = forwardRef(({ selectedItemID, quantity }, ref) => {
+  const { handleQuantityChange } = useContext(CartContext);
+
   const handleInputBlur = (e) => {
     const value = e.target.value;
     const parsedValue = parseInt(value, 10);
 
     if (value === "" || value === "0") {
       alert("최소 수량은 1개입니다.");
-      handleQuantityChange(1);
+      handleQuantityChange(selectedItemID, 1);
       ref.current.value = 1; // 입력 필드 업데이트
       return;
     }
 
     if (!isNaN(parsedValue)) {
-      handleQuantityChange(parsedValue); // 유효한 숫자일 경우 상태 업데이트
+      handleQuantityChange(selectedItemID, parsedValue); // 유효한 숫자일 경우 상태 업데이트
     }
   };
 
@@ -29,7 +32,7 @@ const QuantityInput = forwardRef(({quantity, handleQuantityChange, productId}, r
   return (
     <StyledQuantityInput
       type="number"
-      id={`${parseInt(productId, 10) + 1}-quantity-input`} // 고유한 ID 사용
+      id={`${parseInt(selectedItemID, 10) + 1}-quantity-input`} // 고유한 ID 사용
       ref={ref}
       defaultValue={quantity}
       onBlur={handleInputBlur}
@@ -41,5 +44,3 @@ const QuantityInput = forwardRef(({quantity, handleQuantityChange, productId}, r
 });
 
 export default QuantityInput;
-
-

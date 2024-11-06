@@ -1,7 +1,9 @@
-import React from 'react';
+import React, { useContext } from 'react';
+import { CartContext } from "../contexts/CartContext";
 import * as s from '../styles/ProductStyles';
 
-export default function TotalPrice({ products, totalPrice }) {
+export default function TotalPrice() {
+  const { products, totalPrice } = useContext(CartContext);
   const checkedCount = products.filter(product => product.checked).length;
 
   return (

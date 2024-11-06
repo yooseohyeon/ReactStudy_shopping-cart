@@ -46,18 +46,18 @@ export const SelectAllControlsWrapper = styled.div`
   width: 670px;
   height: 30px;
   border-bottom: 1px solid #aaa;
-  cursor: pointer;
 `;
 
 export const SelectAllCheckbox = styled(ProductCheckbox)`
   margin: 0 10px 0 0;   
+  cursor: ${({ disabled }) => (disabled ? 'not-allowed' : 'pointer')};
 `;
 
 export const SelectAllLabel = styled.label`
   display: flex;
   align-items: center;
   font-size: 17px;
-  cursor: pointer;
+  cursor: ${({ disabled }) => (disabled ? 'not-allowed' : 'pointer')};
   color: ${({ disabled }) => (disabled ? '#bbb' : 'inherit')};
 `
 
@@ -97,32 +97,6 @@ export const QuantityButtonWrapper = styled.div`
   width: 115px;
   height: 35px;
   border: 1px solid #ccc;
-`;
-
-export const StyledQuantityButton = styled.button`
-  padding: 0 5px 0 5px;
-  width: 35px;
-  height: 100%;
-  background-color: #ffffff00;
-
-  &:first-of-type {
-    border-right: 1px solid #ccc;
-  }
-
-  &:last-of-type {
-    border-left: 1px solid #ccc;
-  }
-
-  &:hover {
-    background-color: ${({ disabled }) => (disabled ? 'inherit' : '#eee')}; 
-    cursor: ${({ disabled }) => (disabled ? 'not-allowed' : 'pointer')};
-  }
-
-  &:disabled {
-    svg {
-      fill: #ccc;
-    }
-}
 `;
 
 export const StyledQuantityInput = styled.input`
