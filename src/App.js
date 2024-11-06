@@ -9,17 +9,15 @@ import { calculateTotalPrice } from './utils/calculateTotalPrice';
 import * as s from './styles/ProductStyles';
 
 export default function App() {
-  // 여러 상품의 정보를 담는 배열이므로 이름을 isCheckedList에서 products로 직관적으로 변경함
   const [products, setProducts] = useState(
     productsData.map(product => ({
       ...product,
-      checked: true, 
-      // 모든 상품의 checked를 true로 설정해 처음 접속했을 때 모든 상품들이 자동으로 선택되어 있도록 함
+      checked: true, // 자동으로 모든 상품 선택된 상태
       quantity: 1,  
     }))
   );
 
-  // 가격을 업데이트하는 로직이 여러 곳에서 반복되기 때문에, 이를 calculateTotalPrice 함수로 추출하여 코드를 간결하게 함
+  // 수량과 체크박스 상태가 변할 때마다 총 가격도 다시 계산해야 하는데, 이를 calculateTotalPrice 함수로 추출하여 코드를 간결하게 함
   const [totalPrice, setTotalPrice] = useState(calculateTotalPrice(products));
 
   // 전체 선택/해제 핸들러
@@ -41,15 +39,15 @@ export default function App() {
   
   // 수량 변경 핸들러
   const handleQuantityChange = (productId, newQuantity) => {
-    const updatedCheckedList = products.map(product => {
-      if (product.id === productId) {
-        const priceChange = (newQuantity - product.quantity) * product.price; // 가격 변화 계산
-        setTotalPrice(prevTotal => prevTotal + priceChange); // 가격 변화를 totalPrice에 업데이트
-        return { ...product, quantity: newQuantity }; // quantity 업데이트
-      }
-      return product;
-    });
-    setProducts(updatedCheckedList);
+    /*
+    수량이 변경될 때, 개별 가격 변동을 일일이 계산하고 이후 수량을 업데이트하는 방식에서 
+    수량을 우선 업데이트한 다음에 변경된 products 배열을 순회하면서 총 가격을 한 번만 계산하는 방식으로 바꿈
+    */
+    const updatedProducts = products.map(product =>
+      product.id === productId ? { ...product, quantity: newQuantity } : product
+    );
+    setProducts(updatedProducts);
+    setTotalPrice(calculateTotalPrice(updatedProducts));
   };
 
   return (

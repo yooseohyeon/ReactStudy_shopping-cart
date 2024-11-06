@@ -25,39 +25,39 @@ export const DeleteSingleButton = styled.svg`
 `
 
 export default function DeleteButton({ products, setProducts, setTotalPrice, productId, type }) {
-  // 선택 삭제 핸들러와 단일 삭제 핸들러를 통합해 중복된 코드를 줄임
   const handleDelete = (productId) => {
-    let updatedProducts;
-
-    if (type === 'single') {
-      updatedProducts = products.filter(product => product.id !== productId);
-    } else if (type === 'multiple') {
-      const checkedCount = products.filter(product => product.checked).length;
-      if (window.confirm(`선택한 ${checkedCount}개의 상품을 장바구니에서 삭제하시겠습니까?`)) {
-        const notCheckedList = products.filter(product => !product.checked);
-        updatedProducts = notCheckedList.map(product => ({ ...product, checked: true }));
-      } else {
-        // 사용자가 경고창에서 확인을 누르지 않은 경우 아무 작업도 하지 않음
-        return;
-      }
+    const deleteActions = {
+      single: () => {
+        return products.filter(product => product.id !== productId);
+      },
+      multiple: () => {
+        const checkedCount = products.filter(product => product.checked).length;
+        if (window.confirm(`선택한 ${checkedCount}개의 상품을 장바구니에서 삭제하시겠습니까?`)) {
+          return products.filter(product => !product.checked).map(product => ({ ...product, checked: true }));
+        }
+        return null;  // 사용자가 alert창에서 취소를 누른 경우에는 null 반환해 아무 작업도 하지 않음
+      },
+    };
+  
+    const updatedProducts = deleteActions[type]?.();
+    if (updatedProducts) {
+      setProducts(updatedProducts);
+      setTotalPrice(calculateTotalPrice(updatedProducts));
     }
+  };
 
-    // 두 핸들러에서 공통으로 업데이트되는 부분 - 상품 목록, 총 가격
-    setProducts(updatedProducts);
-    setTotalPrice(calculateTotalPrice(updatedProducts)); 
-  }
-
-  return (
-    <div>
-      {type === 'multiple' ? (
-        <DeleteSelectedButton onClick={handleDelete} disabled={products.length === 0}>
-          선택 삭제
-        </DeleteSelectedButton>
-      ) : type === 'single' ? (
-        <DeleteSingleButton xmlns="http://www.w3.org/2000/svg" viewBox="0 -960 960 960" onClick={() => handleDelete(productId)}>
-          <path d="m256-200-56-56 224-224-224-224 56-56 224 224 224-224 56 56-224 224 224 224-56 56-224-224-224 224Z"/>
-        </DeleteSingleButton>
-      ) : null}
-    </div>
-  )
+  const deleteButtonTypes = {
+    multiple: (
+      <DeleteSelectedButton onClick={handleDelete} disabled={products.length === 0}>
+        선택 삭제
+      </DeleteSelectedButton>
+    ),
+    single: (
+      <DeleteSingleButton xmlns="http://www.w3.org/2000/svg" viewBox="0 -960 960 960" onClick={() => handleDelete(productId)}>
+        <path d="m256-200-56-56 224-224-224-224 56-56 224 224 224-224 56 56-224 224 224 224-56 56-224-224-224 224Z"/>
+      </DeleteSingleButton>
+    ),
+  };
+  
+  return deleteButtonTypes[type] || null; // 타입에 맞는 버튼을 반환, 없으면 null 반환
 }
