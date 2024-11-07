@@ -1,6 +1,5 @@
 import React, { useContext } from 'react';
 import { CartContext } from "../contexts/CartContext";
-import { calculateTotalPrice } from '../utils/calculateTotalPrice';
 import styled from 'styled-components';
 
 export const DeleteSelectedButton = styled.button`
@@ -27,30 +26,30 @@ export const DeleteSingleButton = styled.svg`
 `
 
 export default function DeleteButton({ selectedItemID, type }) {
-  const { products, setProducts, setTotalPrice } = useContext(CartContext);
+  const { products, updateProductsAndTotalPrice } = useContext(CartContext);
 
-  // 버튼 type에 따라  products 배열에서 아이템을 다르게 삭제(단일 삭제/다중 삭제)하는 동작 처리
+  // 버튼 type에 따라 products 배열에서 아이템을 다르게 삭제(단일 삭제/다중 삭제)하는 동작 처리
   const handleDelete = (selectedItemID) => {
     const deleteHandlers = {
       single: () => {
-        return products.filter(product => product.id !== selectedItemID); // 단일 삭제
+        return products.filter(product => product.id !== selectedItemID); 
       },
       multiple: () => {
         const checkedCount = products.filter(product => product.checked).length;
         if (window.confirm(`선택한 ${checkedCount}개의 상품을 장바구니에서 삭제하시겠습니까?`)) {
-          return products.filter(product => !product.checked).map(product => ({ ...product, checked: true })); // 다중 삭제
+          return products.filter(product => !product.checked)
+          .map(product => ({ ...product, checked: true }));
         }
         return null; // 취소 시 아무 작업도 하지 않음
       },
     };
 
     // single이나 multiple 이외의 type이 들어올 경우에는 undefined를 반환하여 에러 방지
-    const newProducts = deleteHandlers[type]?.(); // 삭제 후 새로운 상품 리스트
+    const newProducts = deleteHandlers[type]?.(); // 상품 삭제 후 새로운 상품 리스트
 
-    // newProducts가 존재하는 경우에만 state를 업데이트하여 에러 방지
+    // newProducts가 존재하는 경우에만 Products와 TotalPrice를 업데이트하여 에러 방지
     if (newProducts) {
-      setProducts(newProducts);
-      setTotalPrice(calculateTotalPrice(newProducts));
+      updateProductsAndTotalPrice(newProducts);
     }
   };
 
