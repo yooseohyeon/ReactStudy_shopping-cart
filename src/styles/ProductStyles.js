@@ -6,7 +6,7 @@ export const ShoppingCartContainer = styled.div`
   align-content: space-between;
 `
 
-export const ProductItemWrraper = styled.div`
+export const ProductItemWrapper = styled.div`
   display: block;
   margin-right: 30px;
 `
