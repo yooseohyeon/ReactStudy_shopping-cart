@@ -99,32 +99,6 @@ export const QuantityButtonWrapper = styled.div`
   border: 1px solid #ccc;
 `;
 
-export const StyledQuantityInput = styled.input`
-  appearance: none; /* 기본 스피너 제거 */
-  -webkit-appearance: none; /* Safari에서 기본 스피너 제거 */
-  -moz-appearance: textfield; /* Firefox에서 기본 스피너 제거 */
-  padding: 0;
-  width: 45px;
-  height: 100%;
-  text-align: center;
-  border: none;
-  outline: none;
-  background-color: transparent;
-  cursor: text;
-
-  /* 웹킷 브라우저에서 스피너 버튼 숨기기 */
-  &::-webkit-inner-spin-button,
-  &::-webkit-outer-spin-button {
-    -webkit-appearance: none;
-    margin: 0;
-  }
-
-  &:focus {
-    border: 2px solid #000000;
-  }
-}
-`;
-
 export const TotalPriceWrapper = styled.div`
   padding: 20px;
   width: 350px;

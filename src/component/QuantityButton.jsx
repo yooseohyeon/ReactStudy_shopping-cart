@@ -6,7 +6,7 @@ export const StyledQuantityButton = styled.button`
   padding: 0 5px 0 5px;
   width: 35px;
   height: 100%;
-  background-color: #ffffff00;
+  background-color: transparent;
 
   &:first-of-type {
     border-right: 1px solid #ccc;
@@ -32,16 +32,14 @@ export const QuantityButtonIcon = styled.svg`
   width: 20px;
   height: 20px;
   fill: #282828;
-  cursor: pointer;
+  cursor: ${({ disabled }) => (disabled ? 'not-allowed' : 'pointer')};
 `
 
-export default function QuantityButton({ selectedItemID, delta, quantity, inputRef }) {
+export default function QuantityButton({ selectedItemID, delta, quantity }) {
   const { handleQuantityChange } = useContext(CartContext);
 
   const handleClick = () => {
-    const currentQuantity = parseInt(inputRef.current.value, 10) || 1; // 입력 필드 값 숫자로 변환
-    const newQuantity = Math.max(currentQuantity + delta, 1);
-    inputRef.current.value = newQuantity; 
+    const newQuantity = Math.max(quantity + delta, 1);
     handleQuantityChange(selectedItemID, newQuantity); 
   };
 
