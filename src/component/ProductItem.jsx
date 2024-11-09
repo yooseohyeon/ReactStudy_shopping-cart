@@ -1,7 +1,6 @@
 import React, { useContext } from 'react';
 import { CartContext } from '../contexts/CartContext'
-import QuantityButton from './QuantityButton';
-import QuantityInput from './QuantityInput';
+import QuantitySelector from './QuantitySelector';
 import DeleteButton from './DeleteButton'
 import * as s from '../styles/ProductStyles';
 
@@ -23,11 +22,7 @@ export default function ProductItem({ product }) {
         <s.ProductShop>{product.shop}</s.ProductShop>
         <s.ProductName>{product.name}</s.ProductName>
         <s.ProductPrice>{updatedPrice.toLocaleString('ko-KR')}원</s.ProductPrice>
-        <s.QuantityButtonWrapper>
-          <QuantityButton selectedItemID={product.id} delta={-1} quantity={product.quantity} />
-          <QuantityInput selectedItemID={product.id} quantity={product.quantity} />
-          <QuantityButton selectedItemID={product.id} delta={1} quantity={product.quantity} />
-        </s.QuantityButtonWrapper>
+        <QuantitySelector selectedItemID={product.id} quantity={product.quantity} />
       </s.ProductInfo>
       <DeleteButton selectedItemID={product.id} type="single" />
     </s.ProductContainer>

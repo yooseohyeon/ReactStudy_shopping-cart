@@ -1,5 +1,3 @@
-import React, { useContext } from 'react';
-import { CartContext } from '../contexts/CartContext'
 import styled from 'styled-components';
 
 export const StyledQuantityButton = styled.button`
@@ -35,21 +33,20 @@ export const QuantityButtonIcon = styled.svg`
   cursor: ${({ disabled }) => (disabled ? 'not-allowed' : 'pointer')};
 `
 
-export default function QuantityButton({ selectedItemID, delta, quantity }) {
-  const { handleQuantityChange } = useContext(CartContext);
-
+export default function QuantityButton({ selectedItemID, delta, quantity, updateQuantity }) {
   const handleClick = () => {
     const newQuantity = Math.max(quantity + delta, 1);
-    handleQuantityChange(selectedItemID, newQuantity); 
+    updateQuantity(newQuantity)
   };
 
   return (
     <StyledQuantityButton 
+      id={`${selectedItemID + 1}-quantity-button`}
       onClick={handleClick} 
       disabled={quantity <= 1 && delta < 0}
       aria-label={delta < 0 ? `수량 ${quantity}에서 1 감소` : `수량 ${quantity}에서 1 증가`}
-      aria-controls={`${parseInt(selectedItemID, 10) + 1}-quantity-input`} 
-      // 이 버튼이 id="quantity-input"인 StyledQuantityInput 요소를 제어함을 알려줌
+      aria-controls={`${selectedItemID + 1}-quantity-input`} 
+      // StyledQuantityButton이 StyledQuantityInput 요소를 제어함을 알려줌
     >
       {delta < 0 ? (
         <QuantityButtonIcon xmlns="http://www.w3.org/2000/svg" viewBox="0 -750 960 960">

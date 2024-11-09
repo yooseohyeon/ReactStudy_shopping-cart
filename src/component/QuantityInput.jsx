@@ -1,5 +1,4 @@
-import React, { useContext, useState, useEffect } from 'react';
-import { CartContext } from '../contexts/CartContext';
+
 import styled from 'styled-components';
 
 export const StyledQuantityInput = styled.input`
@@ -28,15 +27,7 @@ export const StyledQuantityInput = styled.input`
 }
 `;
 
-export default function QuantityInput({ selectedItemID, quantity }) {
-  const { handleQuantityChange } = useContext(CartContext);
-  const [inputValue, setInputValue] = useState(quantity); // inputValue state를 통해 input 입력값 관리
-
-  // quantity state가 외부에서 변경될 경우 input 값도 업데이트
-  useEffect(() => {
-    setInputValue(quantity);
-  }, [quantity]);
-
+export default function QuantityInput({ selectedItemID, inputValue, setInputValue, updateQuantity}) {
   const handleInputChange = (e) => {
     setInputValue(e.target.value); 
   };
@@ -45,19 +36,17 @@ export default function QuantityInput({ selectedItemID, quantity }) {
   const handleInputBlur = (e) => {
     const value = e.target.value;
     const parsedValue = parseInt(value, 10);
-
+    
     // 입력된 값이 빈 문자열이거나 0인 경우 최소 수량인 1로 inputValue와 quantity 업데이트
     if (value === "" || value === "0") {
       alert("수량은 최소 1개 이상 입력해야 합니다.");
-      setInputValue(1); 
-      handleQuantityChange(selectedItemID, 1);
+      updateQuantity(1)
       return;
     }
 
     // 입력된 값이 유효한 숫자일 경우 입력된 값으로 inputValue와 quantity 업데이트
     if (!isNaN(parsedValue)) {
-      setInputValue(parsedValue); 
-      handleQuantityChange(selectedItemID, parsedValue);
+      updateQuantity(parsedValue);
     }
   };
 
@@ -72,7 +61,7 @@ export default function QuantityInput({ selectedItemID, quantity }) {
   return (
     <StyledQuantityInput
       type="number"
-      id={`${parseInt(selectedItemID, 10) + 1}-quantity-input`}
+      id={`${selectedItemID + 1}-quantity-input`}
       value={inputValue}
       onChange={handleInputChange}
       onBlur={handleInputBlur}

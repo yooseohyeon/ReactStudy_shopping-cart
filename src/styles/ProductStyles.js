@@ -90,15 +90,6 @@ export const ProductPrice = styled.p`
   font-weight: 600;
 `;
 
-export const QuantityButtonWrapper = styled.div`
-  display: flex;
-  align-items: center;
-  padding: 0;
-  width: 115px;
-  height: 35px;
-  border: 1px solid #ccc;
-`;
-
 export const TotalPriceWrapper = styled.div`
   padding: 20px;
   width: 350px;
